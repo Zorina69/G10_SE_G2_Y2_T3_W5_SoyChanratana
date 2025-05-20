@@ -54,4 +54,15 @@ const deleteJournalist = async (req, res) => {
     return res.status(204).send();
 }
 
-export { getAllJournalists, getJournalistById, createJournalist, updateJournalist, deleteJournalist };
+const articleByJournalist = async (req, res) => {
+    const { id } = req.params;
+    const journalist = journalists.find(j => j.id === parseInt(id));
+    if (!journalist) {
+        return res.status(404).json({ message: "Journalist not found" });
+    }
+
+    const articles = journalist.articles || [];
+    return res.status(200).json(articles);
+}
+
+export { getAllJournalists, getJournalistById, createJournalist, updateJournalist, deleteJournalist, articleByJournalist };

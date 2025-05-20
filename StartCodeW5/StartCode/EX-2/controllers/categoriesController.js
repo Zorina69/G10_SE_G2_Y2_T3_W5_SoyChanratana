@@ -52,4 +52,15 @@ const deleteCategory = async (req, res) => {
     return res.status(204).send();
 }
 
-export { getAllCategories, getCategoryById, createCategory, updateCategory, deleteCategory };
+const articleByCategory = async (req, res) => {
+    const { id } = req.params;
+    const category = categories.find(c => c.id === parseInt(id));
+    if (!category) {
+        return res.status(404).json({ message: "Category not found" });
+    }
+
+    const articles = category.articles || [];
+    return res.status(200).json(articles);
+}
+
+export { getAllCategories, getCategoryById, createCategory, updateCategory, deleteCategory, articleByCategory };
